@@ -1,0 +1,11 @@
+--- traceroute-2.0.21/Make.rules.orig	2015-03-17 15:02:18.721189073 -0700
++++ traceroute-2.0.21/Make.rules	2015-03-17 15:02:28.424230099 -0700
+@@ -53,7 +53,7 @@
+ 
+ 
+ #  install stuff
+-prefix = /usr/local
++prefix = /usr
+ 
+ ifneq ($(wildcard /lib64/libc.* /usr/lib64/libc.*),)
+ lib := lib64
