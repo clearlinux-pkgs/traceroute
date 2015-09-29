@@ -4,7 +4,7 @@
 #
 Name     : traceroute
 Version  : 2.0.21
-Release  : 6
+Release  : 7
 URL      : http://downloads.sourceforge.net/traceroute/traceroute-2.0.21.tar.gz
 Source0  : http://downloads.sourceforge.net/traceroute/traceroute-2.0.21.tar.gz
 Summary  : Traces the route taken by packets over an IPv4/IPv6 network
