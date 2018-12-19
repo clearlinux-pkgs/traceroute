@@ -4,14 +4,15 @@
 #
 Name     : traceroute
 Version  : 2.1.0
-Release  : 13
-URL      : http://downloads.sourceforge.net/traceroute/traceroute-2.1.0.tar.gz
-Source0  : http://downloads.sourceforge.net/traceroute/traceroute-2.1.0.tar.gz
+Release  : 14
+URL      : https://sourceforge.net/projects/traceroute/files/traceroute/traceroute-2.1.0/traceroute-2.1.0.tar.gz
+Source0  : https://sourceforge.net/projects/traceroute/files/traceroute/traceroute-2.1.0/traceroute-2.1.0.tar.gz
 Summary  : Traces the route taken by packets over an IPv4/IPv6 network
 Group    : Development/Tools
 License  : GPL-2.0 GPL-2.0+ LGPL-2.1
-Requires: traceroute-bin
-Requires: traceroute-doc
+Requires: traceroute-bin = %{version}-%{release}
+Requires: traceroute-license = %{version}-%{release}
+Requires: traceroute-man = %{version}-%{release}
 Patch1: 0000-fix-prefix.patch
 
 %description
@@ -28,17 +29,27 @@ problems.
 %package bin
 Summary: bin components for the traceroute package.
 Group: Binaries
+Requires: traceroute-license = %{version}-%{release}
+Requires: traceroute-man = %{version}-%{release}
 
 %description bin
 bin components for the traceroute package.
 
 
-%package doc
-Summary: doc components for the traceroute package.
-Group: Documentation
+%package license
+Summary: license components for the traceroute package.
+Group: Default
 
-%description doc
-doc components for the traceroute package.
+%description license
+license components for the traceroute package.
+
+
+%package man
+Summary: man components for the traceroute package.
+Group: Default
+
+%description man
+man components for the traceroute package.
 
 
 %prep
@@ -46,10 +57,20 @@ doc components for the traceroute package.
 %patch1 -p1
 
 %build
-make V=1  %{?_smp_mflags}
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+export LANG=C
+export SOURCE_DATE_EPOCH=1545260108
+make  %{?_smp_mflags}
+
 
 %install
+export SOURCE_DATE_EPOCH=1545260108
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/traceroute
+cp COPYING %{buildroot}/usr/share/package-licenses/traceroute/COPYING
+cp COPYING.LIB %{buildroot}/usr/share/package-licenses/traceroute/COPYING.LIB
 %make_install
 
 %files
@@ -59,6 +80,11 @@ rm -rf %{buildroot}
 %defattr(-,root,root,-)
 /usr/bin/traceroute
 
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man8/*
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/traceroute/COPYING
+/usr/share/package-licenses/traceroute/COPYING.LIB
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man8/traceroute.8
