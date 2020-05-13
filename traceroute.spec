@@ -4,7 +4,7 @@
 #
 Name     : traceroute
 Version  : 2.1.0
-Release  : 14
+Release  : 15
 URL      : https://sourceforge.net/projects/traceroute/files/traceroute/traceroute-2.1.0/traceroute-2.1.0.tar.gz
 Source0  : https://sourceforge.net/projects/traceroute/files/traceroute/traceroute-2.1.0/traceroute-2.1.0.tar.gz
 Summary  : Traces the route taken by packets over an IPv4/IPv6 network
@@ -30,7 +30,6 @@ problems.
 Summary: bin components for the traceroute package.
 Group: Binaries
 Requires: traceroute-license = %{version}-%{release}
-Requires: traceroute-man = %{version}-%{release}
 
 %description bin
 bin components for the traceroute package.
@@ -54,23 +53,29 @@ man components for the traceroute package.
 
 %prep
 %setup -q -n traceroute-2.1.0
+cd %{_builddir}/traceroute-2.1.0
 %patch1 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1545260108
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1589409803
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1545260108
+export SOURCE_DATE_EPOCH=1589409803
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/traceroute
-cp COPYING %{buildroot}/usr/share/package-licenses/traceroute/COPYING
-cp COPYING.LIB %{buildroot}/usr/share/package-licenses/traceroute/COPYING.LIB
+cp %{_builddir}/traceroute-2.1.0/COPYING %{buildroot}/usr/share/package-licenses/traceroute/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/traceroute-2.1.0/COPYING.LIB %{buildroot}/usr/share/package-licenses/traceroute/01a6b4bf79aca9b556822601186afab86e8c4fbf
 %make_install
 
 %files
@@ -82,8 +87,8 @@ cp COPYING.LIB %{buildroot}/usr/share/package-licenses/traceroute/COPYING.LIB
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/traceroute/COPYING
-/usr/share/package-licenses/traceroute/COPYING.LIB
+/usr/share/package-licenses/traceroute/01a6b4bf79aca9b556822601186afab86e8c4fbf
+/usr/share/package-licenses/traceroute/4cc77b90af91e615a64ae04893fdffa7939db84c
 
 %files man
 %defattr(0644,root,root,0755)
