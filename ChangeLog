@@ -1,3 +1,13 @@
+2024-09-14  Dmitry Butskoy  <Dmitry@Butskoy.name> - 2.1.6
+
+	*  Let getaddrinfo(3) select the default IPv4 or IPv6 protocol version
+	   when it is not explicitly specified on the command line
+	   (Jan Macku, SF bug #16)
+
+	   No more mandatory default to IPv4, follow rfc3484 and
+	   the similar ping(1) behaviour. Drop DEF_AF macro.
+
+
 2023-12-18  Dmitry Butskoy  <Dmitry@Butskoy.name> - 2.1.5
 
 	*  Fix rfc5837 parsing (Francois Rigault)
